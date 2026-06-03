@@ -1,4 +1,8 @@
+streamlit
+groq
+edge-tts
+python-dotenv
 SpeechRecognition
 pygame
-edge-tts
 PyAudio
+pyttsx3

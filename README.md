@@ -1,15 +1,21 @@
 # 1st Voice Agent
 
-A small voice-based agent that uses SpeechRecognition for speech input, Gemini (via `agent.ask_gemini`) for responses, and Microsoft Edge TTS (`edge-tts`) for speech output. Plays audio locally with `pygame`.
+A small voice-based voice agent built on Groq Cloud and Microsoft Edge TTS. The repository includes:
+
+- `main.py` — local microphone voice assistant with `speech_recognition`, `pygame`, and `edge-tts`
+- `app.py` — a Streamlit web UI version with audio upload, transcription, and browser playback
+- `agent.py` — Groq client wrapper for chat completions
+- `voice_agent.py` / `test_tts.py` — helper scripts for offline TTS and voice testing
 
 ## Features
-- Live microphone input via `speech_recognition` (requires PyAudio)
-- Streaming text responses from the `ask_gemini` agent
-- Natural-sounding TTS via `edge-tts` and `pygame` playback
+- Local microphone speech input via `SpeechRecognition`
+- Voice response generation through Groq Cloud (`llama-3.3-70b-versatile`)
+- Natural-sounding text-to-speech using `edge-tts`
+- Optional Streamlit web interface for browser voice interactions
 
 ## Requirements
 - Python 3.10+
-- Windows recommended (tested on Windows)
+- Windows recommended for microphone and audio playback support
 
 ## Installation
 1. Clone the repo:
@@ -19,7 +25,7 @@ git clone https://github.com/Abdullah17521/1st-voice-agent.git
 cd 1st-voice-agent
 ```
 
-2. Create and activate a virtualenv:
+2. Create and activate a virtual environment:
 
 ```bash
 python -m venv venv
@@ -30,30 +36,37 @@ venv\Scripts\activate
 
 ```bash
 pip install -r requirements.txt
-# On Windows, if PyAudio fails to build, you can use pipwin:
-# pip install pipwin
-# pipwin install pyaudio
 ```
 
-4. Create a `.env` file (see `.env.example`) and set any keys needed by `agent.py`.
+4. Create a `.env` file from the example and add your Groq API key:
+
+```bash
+copy .env.example .env
+```
+
+Then set:
+
+```env
+GROQ_API_KEY=your_groq_api_key_here
+```
 
 ## Usage
-Run the voice agent from the project root:
+
+### Run the local voice assistant
 
 ```bash
 python main.py
 ```
 
-Speak clearly into your microphone. Say `exit`, `quit`, or `stop` to end the session.
+### Run the Streamlit web interface
 
-## Files
-- `main.py` — entrypoint that listens, queries the agent, and speaks responses
-- `agent.py` — wraps the Gemini/AI calls (ensure it is configured)
-- `voice_agent.py` / `app.py` — extra utilities and app interfaces
+```bash
+streamlit run app.py
+```
 
 ## Notes
-- The repository includes a `venv` directory and other local artifacts. Add them to `.gitignore` (provided).
-- If you plan to push to GitHub, ensure your local git user/email are configured and you have push access to the target repo.
+- Keep `.env` private; `GROQ_API_KEY` should never be committed.
+- `requirements.txt` includes the packages needed for both local and Streamlit use.
 
 ## License
 Project code — see repository for license details.
