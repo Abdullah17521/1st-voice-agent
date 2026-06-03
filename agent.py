@@ -1,20 +1,17 @@
-import os
-from dotenv import load_dotenv
+import streamlit as st
 from groq import Groq
 
-# Local testing ke liye `.env` file se keys load karein
-load_dotenv()
-
-# Streamlit Cloud ya local env dono se automatically key dhoondega
-GROQ_REAL_KEY = os.environ.get("GROQ_API_KEY")
+# FIX: Streamlit native secrets use karein taake cloud dashboard se key direct read ho
+GROQ_REAL_KEY = st.secrets.get("GROQ_API_KEY")
 
 def ask_groq(user_text: str):
     if not GROQ_REAL_KEY:
-        return "Error: GROQ_API_KEY is missing. Please configure it in environment secrets."
+        return "Error: GROQ_API_KEY is missing in agent.py secrets."
         
     try:
-        # Dynamic client init taake deployment par keys refresh ho sakein
+        # Client ko initialization ke waqt key pass karein
         client = Groq(api_key=GROQ_REAL_KEY)
+        
         completion = client.chat.completions.create(
             messages=[
                 {
