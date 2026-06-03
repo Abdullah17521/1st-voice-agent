@@ -2,7 +2,3 @@ streamlit
 groq
 edge-tts
 python-dotenv
-SpeechRecognition
-pygame
-PyAudio
-pyttsx3
